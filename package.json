@@ -280,7 +280,7 @@
     "zod": "^3.24.2"
   },
   "scripts": {
-    "dev": "node bot.js"
+    "start": "node bot.js"
   },
   "keywords": [],
   "author": "",

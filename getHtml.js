@@ -4,7 +4,11 @@ const { PassThrough } = require('stream');
 
 async function GetFileUrl() {
   try {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        executablePath: '/usr/bin/google-chrome', // Путь к установленному Chrome
+        args: ['--no-sandbox', '--disable-setuid-sandbox'], // Аргументы для работы в Docker
+        headless: true, // Режим без графического интерфейса
+    });
     const page = await browser.newPage();
     await page.goto('https://bak93.ru/', { waitUntil: 'domcontentloaded', timeout: 60000 });
     await page.waitForSelector('.WebElementsDocumentDownload__link.js_WebElementsDocumentDownload__link', { timeout: 20000 });

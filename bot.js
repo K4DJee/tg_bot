@@ -22,6 +22,8 @@ const cmd_menu = "/menu";
 const cmd_link = "/link";
 const cmd_messages = '/jokes';
 const cmd_subShedule = '/subshedule';
+const cmd_stopSub = '/stopSub';
+const cmd_closeMenu = '/closemenu'
 const cmds = [
     cmd_start, // 0
     cmd_menu, // 1
@@ -29,7 +31,9 @@ const cmds = [
     cmd_shedule, // 3
     cmd_link, // 4
     cmd_messages, // 5
-    cmd_subShedule // 6
+    cmd_subShedule, // 6
+    cmd_stopSub, //7
+    cmd_closeMenu //8
 ];
 
 const commands_menu = [
@@ -49,13 +53,17 @@ bot.on('text', async msg => {
     try {
         const text = msg.text.trim();
 
-        if (text === cmds[0]) {
+        if (text === cmds[0] || text === `${cmds[0]}${botUsername}`) {
             await bot.sendMessage(msg.chat.id, `Привет ${msg.chat.first_name}! Этот бот представляет собой рассылку расписаний`);
         } else if (text === cmds[2]) {
             await bot.sendMessage(msg.chat.id, `Список команд:
                 ${cmd_start} - Перезапуск бота
                 ${cmd_help} - Список команд
                 ${cmd_shedule} - Расписание
+                ${cmd_messages} - Рандомные анекдоты
+                ${cmd_menu} - Вызов меню
+                ${cmd_subShedule} - Подписка на рассылку расписания
+                ${cmd_closeMenu} - Команда на закрытие меню
             `);
         }
          else if (text === cmds[3] || text === `${cmds[3]}${botUsername}` || text === 'Расписание') {
@@ -108,7 +116,7 @@ bot.on('text', async msg => {
             await bot.sendMessage(msg.chat.id, 'Подписка на рассылку расписания была успешно оформлена!');
             checkLinkPeriodically(groupChatId); // Запускаем рассылку
         }
-         else if (text === "Отмена подписки") {
+         else if (text === "Отмена подписки" || text === cmds[7] || text === `${cmds[7]}${botUsername}`) {
             if (timerId) {
                 clearInterval(timerId);
                 timerId = null;
@@ -118,28 +126,12 @@ bot.on('text', async msg => {
                 await bot.sendMessage(msg.chat.id, 'Подписка на рассылку расписания не была активна');
             }
         }
-         else if (text === "Закрыть меню") {
+         else if (text === "Закрыть меню" || text === cmds[8] || text === `${cmds[8]}${botUsername}`) {
             await bot.sendMessage(msg.chat.id, 'Меню закрыто', {
                 reply_markup: {
                     remove_keyboard: true
                 }
             });
-        }
-         else if (text === "/link" || text === `/link${botUsername}`) {
-            try {
-                console.log('Отправка PDF файла!!!');
-                const downloadLink = await GetFileUrl();
-                const pdfData = await getPdf(downloadLink);
-                await bot.sendDocument(msg.chat.id, pdfData, 
-                    {source: pdfData},
-                    {filename: 'Расписание.pdf'},
-                    {contentType: 'application/pdf'},
-                    {caption: 'PDF-файл'}
-                );
-            } catch (error) {
-                await bot.sendMessage(msg.chat.id, "Ошибка при получении данных");
-                console.log(error.message);
-            }
         }
          else {
             console.log(msg);
@@ -150,7 +142,7 @@ bot.on('text', async msg => {
     }
 });
 
-// Функция для проверки ссылки каждые 10 минут
+// Функция для проверки ссылки каждые 15 минут
 async function checkLinkPeriodically(groupChatId) {
     if (isSubscriptionActive) {
         console.log("Функция checkLinkPeriodically запущена!!!");
@@ -174,7 +166,7 @@ async function checkLinkPeriodically(groupChatId) {
             } catch (error) {
                 console.error('Ошибка при проверке ссылки:', error.message);
             }
-        }, 15 * 60 * 1000); // 10 минут в миллисекундах
+        }, 15 * 60 * 1000); 
     } else {
         console.log("Рассылка не активна.");
     }

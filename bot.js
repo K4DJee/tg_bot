@@ -54,8 +54,8 @@ bot.on('text', async msg => {
         const text = msg.text.trim();
 
         if (text === cmds[0] || text === `${cmds[0]}${botUsername}`) {
-            await bot.sendMessage(msg.chat.id, `Привет ${msg.chat.first_name}! Этот бот представляет собой рассылку расписаний`);
-        } else if (text === cmds[2]) {
+            await bot.sendMessage(msg.chat.id, `Привет ${msg.from.first_name}! Этот бот представляет собой рассылку расписаний`);
+        } else if (text === cmds[2] || text === `${cmds[1]}${botUsername}`) {
             await bot.sendMessage(msg.chat.id, `Список команд:
                 ${cmd_start} - Перезапуск бота
                 ${cmd_help} - Список команд
@@ -122,6 +122,7 @@ bot.on('text', async msg => {
                 timerId = null;
                 isSubscriptionActive = false; // Сбрасываем флаг активности
                 await bot.sendMessage(msg.chat.id, 'Рассылка расписания отменена');
+                console.log('Subscribe stop ${groupChatId}');
             } else {
                 await bot.sendMessage(msg.chat.id, 'Подписка на рассылку расписания не была активна');
             }

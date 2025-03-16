@@ -200,7 +200,6 @@
     "pump": "^2.0.1",
     "punycode": "^2.3.1",
     "puppeteer": "^24.4.0",
-    "puppeteer-core": "^24.4.0",
     "qs": "^6.14.0",
     "querystringify": "^2.2.0",
     "readable-stream": "^2.3.8",

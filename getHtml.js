@@ -4,7 +4,10 @@ const { PassThrough } = require('stream');
 
 async function GetFileUrl() {
   try {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox'], // Для работы в Docker/Railway
+      headless: true,
+    });
     const page = await browser.newPage();
     await page.goto('https://bak93.ru/', { waitUntil: 'domcontentloaded', timeout: 60000 });
     await page.waitForSelector('.WebElementsDocumentDownload__link.js_WebElementsDocumentDownload__link', { timeout: 20000 });

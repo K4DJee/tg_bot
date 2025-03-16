@@ -174,7 +174,7 @@ async function checkLinkPeriodically(groupChatId) {
             } catch (error) {
                 console.error('Ошибка при проверке ссылки:', error.message);
             }
-        }, 10 * 60 * 1000); // 10 минут в миллисекундах
+        }, 15 * 60 * 1000); // 10 минут в миллисекундах
     } else {
         console.log("Рассылка не активна.");
     }

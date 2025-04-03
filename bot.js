@@ -46,6 +46,7 @@ const commands_menu = [
 ];
 
 const user2 = 1841119197;
+const user3 = 902004661;
 const groupSpec = 2096638819;
 
 bot.setMyCommands(commands_menu);
@@ -60,8 +61,8 @@ bot.on('text', async msg => {
             try{
             await bot.sendMessage(msg.chat.id, `Привет, ${msg.from.first_name}! Этот бот представляет собой рассылку расписаний`);
             
-            await bot.sendMessage(groupSpec, "валера в роблокс пора");
-            await bot.sendAnimation(groupSpec, randomGif());
+            await bot.sendMessage(user3, "валера в роблокс пора");
+            await bot.sendAnimation(user3, randomGif());
         }
         catch(error){
             console.log(error.message);

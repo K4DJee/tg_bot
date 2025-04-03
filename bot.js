@@ -46,6 +46,7 @@ const commands_menu = [
 ];
 
 const user2 = 1841119197;
+const groupSpec = 2096638819;
 
 bot.setMyCommands(commands_menu);
 
@@ -58,7 +59,8 @@ bot.on('text', async msg => {
         if (text === cmds[0] || text === `${cmds[0]}${botUsername}`) {
             await bot.sendMessage(msg.chat.id, `Привет, ${msg.from.first_name}! Этот бот представляет собой рассылку расписаний`);
             
-            await bot.sendMessage(user2, "Привет друх!");
+            await bot.sendMessage(groupSpec, "валера в роблокс пора");
+            await bot.sendAnimation(groupSpec, randomGif());
         } else if (text === cmds[2] || text === `${cmds[2]}${botUsername}`) {
             await bot.sendMessage(msg.chat.id, `Список команд:
                 ${cmd_start} - Перезапуск бота

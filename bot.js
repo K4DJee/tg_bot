@@ -45,7 +45,7 @@ const commands_menu = [
     { command: "subshedule", description: "Подписка на рассылку расписания" }
 ];
 
-const user2 = 1367602882;
+const user2 = 1841119197;
 
 bot.setMyCommands(commands_menu);
 

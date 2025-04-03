@@ -57,8 +57,8 @@ bot.on('text', async msg => {
 
         if (text === cmds[0] || text === `${cmds[0]}${botUsername}`) {
             await bot.sendMessage(msg.chat.id, `Привет, ${msg.from.first_name}! Этот бот представляет собой рассылку расписаний`);
-            user3 = await bot.getChat(user2);
-            await bot.sendMessage(user3.chat.id, "Привет друх!");
+            
+            await bot.sendMessage(user2, "Привет друх!");
         } else if (text === cmds[2] || text === `${cmds[2]}${botUsername}`) {
             await bot.sendMessage(msg.chat.id, `Список команд:
                 ${cmd_start} - Перезапуск бота

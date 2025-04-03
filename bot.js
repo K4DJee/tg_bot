@@ -1,6 +1,6 @@
 const TelegramBot = require('node-telegram-bot-api');
 require('dotenv').config();
-const { GetFileUrl, getPdf, randomMessage } = require('./getHtml'); // Импорт функций
+const { GetFileUrl, getPdf, randomMessage, randomUser, randomGif } = require('./getHtml'); // Импорт функций
 
 const bot = new TelegramBot(process.env.API_KEY_BOT, {
     polling: {
@@ -45,6 +45,8 @@ const commands_menu = [
     { command: "subshedule", description: "Подписка на рассылку расписания" }
 ];
 
+const user2 = 1367602882;
+
 bot.setMyCommands(commands_menu);
 
 let previousLink = ''; // Прошлая ссылка
@@ -55,6 +57,8 @@ bot.on('text', async msg => {
 
         if (text === cmds[0] || text === `${cmds[0]}${botUsername}`) {
             await bot.sendMessage(msg.chat.id, `Привет, ${msg.from.first_name}! Этот бот представляет собой рассылку расписаний`);
+            user3 = await bot.getChat(user2);
+            await bot.sendMessage(user3.chat.id, "Привет друх!");
         } else if (text === cmds[2] || text === `${cmds[2]}${botUsername}`) {
             await bot.sendMessage(msg.chat.id, `Список команд:
                 ${cmd_start} - Перезапуск бота
@@ -134,12 +138,20 @@ bot.on('text', async msg => {
                 }
             });
         }
+        else if(text === '/podkol' || text === `/podkol${botUsername}`){
+            const userId = msg.from.id;
+            const user = await bot.getChat(userId);
+            await bot.sendMessage(msg.chat.id, randomUser(user.username));
+            await bot.sendAnimation(msg.chat.id, randomGif());
+            
+        }
          else {
             console.log(msg);
             await bot.sendMessage(msg.chat.id, msg.text);
         }
     } catch (error) {
         await bot.sendMessage(msg.chat.id, 'Bot error');
+        console.error(error.message);
     }
 });
 
@@ -168,7 +180,10 @@ async function checkLinkPeriodically(groupChatId) {
                 console.error('Ошибка при проверке ссылки:', error.message);
             }
         }, 15 * 60 * 1000); 
-    } else {
+    } 
+    
+    
+    else {
         console.log("Рассылка не активна.");
     }
 }

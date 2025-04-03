@@ -99,5 +99,23 @@ function randomMessage() {
     return jokes[Math.floor(Math.random() * jokes.length)];
 }
 
+function randomUser(userId){
+  const messages = [
+    `Ты чё мышь @${userId}!`,
+    `Ты че мразь @${userId}`
+  ]
+  return messages[Math.floor(Math.random()* messages.length)];
+}
+
+function randomGif(){
+  const gifs = [
+    'https://media1.tenor.com/m/ZK1ZegeT9gYAAAAd/dick-penis.gif',
+    'https://media1.tenor.com/m/8GJDRZhDmLIAAAAC/thi-monket-monket.gif',
+    'https://media1.tenor.com/m/XE2__E8QZdYAAAAd/monkey-monkey-eating.gif',
+    'https://media1.tenor.com/m/4oVXUeN_X7UAAAAC/%D0%B8%D0%B2%D0%B0%D0%BD-%D0%B7%D0%BE%D0%BB%D0%BE.gif',
+    
+];
+return gifs[Math.floor(Math.random() * gifs.length)];
+}
 // Экспорт всех функций
-module.exports = { GetFileUrl, getPdf, randomMessage };
+module.exports = { GetFileUrl, getPdf, randomMessage, randomUser, randomGif };
